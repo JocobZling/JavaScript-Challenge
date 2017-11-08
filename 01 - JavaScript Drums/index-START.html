@@ -58,7 +58,62 @@
   <audio data-key="76" src="sounds/tink.wav"></audio>
 
 <script>
-
+    function playSound(event) {
+        let audioArray = document.getElementsByTagName("audio");
+        let keyArray = document.getElementsByClassName('key');
+        let player;
+        let key;
+        if (event.keyCode === 65) {
+            player = audioArray.item(0);
+            key = keyArray.item(0);
+            //console.log(key);
+        }
+        if (event.keyCode === 83) {
+            player = audioArray.item(1);
+            key = keyArray.item(1);
+        }
+        if (event.keyCode === 68) {
+            player = audioArray.item(2);
+            key = keyArray.item(2);
+        }
+        if (event.keyCode === 70) {
+            player = audioArray.item(3);
+            key = keyArray.item(3);
+        }
+        if (event.keyCode === 71) {
+            player = audioArray.item(4);
+            key = keyArray.item(4);
+        }
+        if (event.keyCode === 72) {
+            player = audioArray.item(5);
+            key = keyArray.item(5);
+        }
+        if (event.keyCode === 74) {
+            player = audioArray.item(6);
+            key = keyArray.item(6);
+        }
+        if (event.keyCode === 75) {
+            player = audioArray.item(7);
+            key = keyArray.item(7);
+        }
+        if (event.keyCode === 76) {
+            player = audioArray.item(8);
+            key = keyArray.item(8);
+        }
+        // console.log(key);
+        key.classList.add('playing');//add给元素添加一个指定的class
+        //key.setAttribute("class","playing");//No
+        player.play();
+    }
+    function remove(event) {
+        event.target.classList.remove('playing');//remove从元素中删除一个指定的class
+    }
+    let keys = document.getElementsByClassName("key");
+    //console.log(keys);
+    for (let item of keys) {
+        item.addEventListener('transitionend', remove);
+    }
+    window.addEventListener('keydown', playSound);//监听键盘按键的事件
 </script>
 
 
