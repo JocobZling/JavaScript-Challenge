@@ -132,8 +132,11 @@
     let panels = document.querySelectorAll(".panel");
     panels.forEach(panel => panel.getElementsByTagName('p')[0].style.transform= "translateY(-100%)");//定位字
     panels.forEach(panel => panel.getElementsByTagName('p')[2].style.transform= "translateY(100%)");
+
     function panelsClose() {
         panels.forEach(panel => panel.classList.remove('open'));
+        e.getElementsByTagName('p')[0].style.transform= "translateY(-100%)";
+        e.getElementsByTagName('p')[2].style.transform= "translateY(100%)";
     }
     function moveText(text1,text2) {
        // text1.style.visibility="visible";
