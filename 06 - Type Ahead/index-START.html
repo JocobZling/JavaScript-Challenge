@@ -1,27 +1,68 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Type Ahead</title>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <title>Type Ahead</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-  <form class="search-form">
+<form class="search-form">
     <input type="text" class="search" placeholder="City or State">
     <ul class="suggestions">
-      <li>Filter for a city</li>
-      <li>or a state</li>
+        <li>Filter for a city</li>
+        <li>or a state</li>
     </ul>
-  </form>
+</form>
 <script>
-const endpoint = 'https://gist.githubusercontent.com/Miserlou/c5cd8364bf9b2420bb29/raw/2bf258763cdddd704f8ffd3ea9a3e81d25e2c6f6/cities.json';
-const cities = [];  //通过下面的方式可以异步获取到所有的城市名字
-fetch(endpoint)
-  .then(blob => blob.json())
-  .then(data => cities.push(...data));
+    const endpoint = 'https://gist.githubusercontent.com/Miserlou/c5cd8364bf9b2420bb29/raw/2bf258763cdddd704f8ffd3ea9a3e81d25e2c6f6/cities.json';
+    const cities = [];  //通过下面的方式可以异步获取到所有的城市名字
 
+    //Fetch API提供了一个获取资源的接口(包括跨网络)。
+    // 任何使用过 XMLHttpRequest 的人都会熟悉它，
+    // 但是新的API提供了更强大和更灵活的功能集。
+    fetch(endpoint)
+        .then(blob => blob.json())
+        .then(data => cities.push(...data));
 
+    console.log(cities);
+    function findCity(inputCity, cities) {
+        return cities.filter(place => {
+            const regex = new RegExp(inputCity, 'ig');
+            //RegExp 对象表示正则表达式
+            //i	执行对大小写不敏感的匹配。g执行全局匹配（查找所有匹配而非在找到第一个匹配后停止）。
+            //match() 方法可在字符串内检索指定的值，或找到一个或多个正则表达式的匹配。
+            return place.city.match(regex) || place.state.match(regex)
+        });
+    }
+    //每三个插入一个,
+    function numberWithCommas(number) {
+        //console.log(number);每一个number,纵向的
+        return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    }
+    //生成搜索结果列表
+    function displayList() {
+        const matchArray = findCity(this.value, cities);
+        const html = matchArray.map(place => {
+            const regex = new RegExp(this.value, 'ig');
+            const cityName = place.city.replace(regex, `<span class="hl">${this.value}</span>`);
+            const stateName = place.state.replace(regex, `<span class="hl">${this.value}</span>`);
+            return `
+      <li>
+        <span class="name">${cityName}, ${stateName}</span>
+        <span class="population">${numberWithCommas(place.population)}</span>
+      </li>
+    `;
+        }).join('');
+        suggest.innerHTML = html;
+    }
+
+    let input = document.querySelector(".search");
+    let suggest = document.querySelector(".suggestions");
+
+    //添加事件的监听
+    input.addEventListener("change", displayList);
+    input.addEventListener("keyup", displayList);
 </script>
-  </body>
+</body>
 </html>
