@@ -1,18 +1,66 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>HTML5 Canvas</title>
+    <meta charset="UTF-8">
+    <title>HTML5 Canvas</title>
 </head>
 <body>
 <canvas id="draw" width="800" height="800"></canvas>
 <script>
+    const canvas = document.getElementById("draw");
+    //console.log(canvas);
+    let ctx = canvas.getContext('2d');//2d效果
+    canvas.height = window.innerHeight;
+    canvas.width = window.innerWidth;
+
+    ctx.lineCap = 'round';//笔触为圆的
+    ctx.lineWidth = 80;//设置线条粗细
+
+    let lastX = 0;
+    let lastY = 0;
+    let hue = 0;
+    let direction = true;
+    let isDraw = false;
+
+
+    function draw(e) {
+        if (isDraw !== true)return;
+
+        //鼠标点击位置
+        [lastX, lastY] = [e.offsetX, e.offsetY];
+        ctx.strokeStyle = `hsl(${hue}, 100%, 60%)`;
+        ctx.beginPath();//新建一条路径
+        ctx.moveTo(lastX, lastY);//绘制操作的起点
+        ctx.lineTo(e.offsetX, e.offsetY);//路径的终点
+        ctx.stroke();//绘制轮廓
+
+        //色相最高360，设置颜色变化
+        hue++;
+        if (hue >= 360) {
+            hue = 0;
+        }
+
+        //设置线条的粗细，超过范围取反
+        if (ctx.lineWidth >= 80 || ctx.lineWidth <= 5) {
+            direction = !direction;
+        }
+        if (direction) {
+            ctx.lineWidth++;
+        } else {
+            ctx.lineWidth--;
+        }
+    }
+
+    canvas.addEventListener("mousedown", (e) => isDraw = true);
+    canvas.addEventListener("mousemove", draw);
+    canvas.addEventListener("mouseup", () => isDraw = false);
+
 </script>
 
 <style>
-  html, body {
-    margin:0;
-  }
+    html, body {
+        margin: 0;
+    }
 </style>
 
 </body>
