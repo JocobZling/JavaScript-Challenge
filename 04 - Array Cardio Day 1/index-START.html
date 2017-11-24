@@ -73,9 +73,9 @@
     const data = ['car', 'car', 'truck', 'truck', 'bike', 'walk', 'car', 'van',
         'bike', 'walk', 'car', 'van', 'car', 'truck'];
     let dataObj = data.reduce((pre, cur) => {
-       // debugger;
-       // console.log(pre);//{}
-        if (pre.hasOwnProperty(cur)!==true) {
+        // debugger;
+        // console.log(pre);//{}
+        if (pre.hasOwnProperty(cur) !== true) {
             //使用对象的hasOwnProperty()方法。该方法只能判断自有属性是否存在，对于继承属性会返回false。
             pre[cur] = 1;
         } else {
@@ -83,6 +83,12 @@
         }
         return pre;
     }, {});
+    let {entries} = Object;
+    let result=[];
+    for (let [key, value] of entries(dataObj)) {
+        result.push({key: key, count: value})
+    }
+    console.log(result);
     console.log(dataObj);
 </script>
 </body>
