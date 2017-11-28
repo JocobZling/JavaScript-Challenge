@@ -1,12 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Key Detection</title>
-  <script type="text/javascript" src="http://www.cornify.com/js/cornify.js"></script>
+    <meta charset="UTF-8">
+    <title>Key Detection</title>
+    <script type="text/javascript" src="http://www.cornify.com/js/cornify.js"></script>
 </head>
 <body>
 <script>
+    const keyUp = [];
+    let secretCode = 'hello';
+    window.addEventListener("keyup", (e) => {
+        console.log(e.key);
+        keyUp.push(e.key);
+        keyUp.splice(-secretCode.length - 1, pressed.length - secretCode.length); //截取数组
+        if (keyUp.join('').includes(secretCode)) { //判断是否符合暗号
+            console.log('DING DING!');
+            alert("惊喜！")
+        }
+    });
 </script>
 </body>
 </html>

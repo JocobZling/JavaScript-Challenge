@@ -32,7 +32,7 @@ let progress = player.querySelector(".progress");
 let progressFilled = progress.querySelector(".progress__filled");
 let toggle = player.querySelector(".toggle");//播放按键
 let playerButton = player.querySelectorAll("[data-skip]");//快进快退键
-let range = player.querySelectorAll("range");//拉条全部选择
+let range = player.querySelectorAll(".player__slider");//拉条全部选择
 progressFilled.style.flexBasis = "0%";
 
 
@@ -42,6 +42,7 @@ toggle.addEventListener("click", play);
 
 //控制快慢的按钮
 playerButton.forEach(button => button.addEventListener("click", playSpeed));
+
 //拉条的监听
 range.forEach(volume => volume.addEventListener("change", volumeChange));
 range.forEach(volume => volume.addEventListener("mousemove", volumeChange));
