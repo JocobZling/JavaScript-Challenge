@@ -14,7 +14,6 @@
         keyUp.push(e.key);
         keyUp.splice(-secretCode.length - 1, pressed.length - secretCode.length); //截取数组
         if (keyUp.join('').includes(secretCode)) { //判断是否符合暗号
-            console.log('DING DING!');
             alert("惊喜！")
         }
     });
