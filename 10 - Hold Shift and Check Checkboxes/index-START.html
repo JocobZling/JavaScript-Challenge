@@ -115,6 +115,7 @@ When a user clicks a checkbox, holds Shift, and then clicks another checkbox a f
         console.log(checkBeginBox);
         console.log(shift);
         //控制如果没有点击第一个时按shift
+        //用法：event.shiftKey=true|false|1|0
         if (shift && this.checked && checkBeginBox) {
             let bool = false;
             checkbox.forEach(box => {//遍历每一个check，选出中间应该设置为true的box
