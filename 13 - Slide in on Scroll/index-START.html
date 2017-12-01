@@ -141,6 +141,7 @@
 </div>
 
 <script>
+    //消抖函数？
     function debounce(func, wait = 20, immediate = true) {
         var timeout;
         return function () {
@@ -158,25 +159,31 @@
 
     let images = document.querySelectorAll(".slide-in");
 
-    function checkSlide(e) {
+    function checkSlide() {
         images.forEach(image => {
             let maxSlide = window.scrollY + window.innerHeight - image.height / 2;
             //scollY为y轴滚动的距离
             //innerHeight为浏览器轮动条的高度值
             //图片的高度的一半时为边界
             //offsetTop为图片到顶端的距离
-            if (maxSlide > image.offsetTop) {
+            let imageHeight = image.height + image.offsetTop;
+            //保证向上滑动有效果
+            if (maxSlide > image.offsetTop && imageHeight > window.scrollY) {
                 image.classList.add("active");
             } else {
                 image.classList.remove("active");
             }
         });
     }
-    window.addEventListener('scroll', debounce(checkSlide, 20, true));
+
+    window.addEventListener('scroll', debounce(checkSlide));
+    //window.addEventListener('scroll', checkSlide);也可以实现
 
 </script>
 
 <style>
+    /*    float浮动布局
+        布局中常用的CSS属性是 float , float可用于实现文字环绕图片*/
     html {
         box-sizing: border-box;
         background: #ffc600;
@@ -232,6 +239,18 @@
         opacity: 1;
         transform: translateX(0%) scale(1);
     }
+
+    /*    opacity透明度设置
+
+        .slide-in {
+            opacity: 0;
+            transition: all .5s;
+        }
+        .slide-in.active {
+            opacity: 1;
+            transform: translateX(0%) scale(1);
+        }
+        opacity:设置对象的透明度，值在0-1之间。*/
 
 </style>
 
