@@ -1,40 +1,74 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Mouse Shadow</title>
+    <meta charset="UTF-8">
+    <title>Mouse Shadow</title>
 </head>
 <body>
 
-  <div class="hero">
+<div class="hero">
     <h1 contenteditable>🔥WOAH!</h1>
-  </div>
+</div>
 
-  <style>
-  html {
-    color:black;
-    font-family: sans-serif;
-  }
+<style>
+    html {
+        color: black;
+        font-family: sans-serif;
+    }
 
-  body {
-    margin: 0;
-  }
+    body {
+        margin: 0;
+    }
 
-  .hero {
-    min-height: 100vh;
-    display:flex;
-    justify-content: center;
-    align-items: center;
-    color:black;
-  }
+    .hero {
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: black;
+    }
 
-  h1 {
-    text-shadow: 10px 10px 0 rgba(0,0,0,1);
-    font-size: 100px;
-  }
-  </style>
+    h1 {
+        text-shadow: 10px 10px 0 rgba(0, 0, 0, 1);
+        font-size: 100px;
+    }
+
+    /*
+    h-shadow	必需。水平阴影的位置。允许负值。
+    v-shadow	必需。垂直阴影的位置。允许负值。
+    blur	    可选。模糊的距离。
+    color	    可选。阴影的颜色。
+     */
+</style>
 
 <script>
+    let hero = document.querySelector(".hero");
+    let h1 = hero.querySelector("h1");
+
+    hero.addEventListener("mousemove", shadowMove);
+
+    //target 事件属性可返回事件的目标节点（触发该事件的节点），如生成事件的元素、文档或窗口。
+    function shadowMove(e) {
+        let range = {
+            x: hero.offsetHeight,//hero的长
+            y: hero.offsetWidth//hero的宽
+        };
+
+        //鼠标当前的位置
+        //target 事件属性可返回事件的目标节点（触发该事件的节点）
+        let pos = {
+            x: e.offsetX + e.target.offsetLeft,
+            y: e.offsetY + e.target.offsetTop
+        };
+        let shadowX = (pos.x - range.x) / 2 * 0.3;//阴影比例
+        let shadowY = (pos.y - range.y) / 2 * 0.3;
+
+        h1.style.textShadow = `
+      ${shadowX}px ${shadowY}px 0 rgba(255,0,255,1),
+      ${shadowX * (-1)}px ${shadowY}px 0 rgba(225,0,0,0.5),
+      ${shadowY}px ${shadowX * (-1)}px 0 rgba(0,251,0,1),
+      ${shadowY * (-1)}px ${shadowX}px 0 rgba(0,0,125,0.5)`;
+    }
 </script>
 </body>
 </html>
