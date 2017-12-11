@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Click and Drag</title>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <title>Click and Drag</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="items">
+<div class="items">
     <div class="item item1">01</div>
     <div class="item item2">02</div>
     <div class="item item3">03</div>
@@ -32,10 +32,41 @@
     <div class="item item23">23</div>
     <div class="item item24">24</div>
     <div class="item item25">25</div>
-  </div>
+</div>
 
 <script>
+    const items = document.querySelector(".items");
+    let isMouseDown = false;
+    let pageXPosition;
+    let scrollXPosition;
+    items.addEventListener("mousedown", beginMove);
+    items.addEventListener("mouseup", stopMove);
+    items.addEventListener("mousemove", itemMove);
+    items.addEventListener("mouseleave",stopMove);//消除了偶尔产生的点击离开还能移动Bug
+
+    //鼠标弹起，移走CSS
+    //记住初始的位置
+    function stopMove() {
+        isMouseDown = false;
+        items.classList.remove("active");
+    }
+
+    //点击添加css
+    function beginMove(e) {
+        isMouseDown = true;
+        items.classList.add("active");
+        pageXPosition = e.clientX;
+        scrollXPosition = items.scrollLeft;
+        console.log(pageXPosition + "," + scrollXPosition);
+    }
+
+    //移动scrollX
+    function itemMove(e) {
+        if (!isMouseDown) return;
+        items.scrollLeft = scrollXPosition - e.clientX + pageXPosition;//必要！
+    }
+    console.log(items);
 </script>
 
-  </body>
+</body>
 </html>
