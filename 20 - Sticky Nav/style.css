@@ -53,9 +53,10 @@ nav {
   z-index: 1;
 }
 
+/*绝对定位*/
 body.fixed-nav nav {
   position: fixed;
-  box-shadow:0 5px 0 rgba(0,0,0,0.1);
+  box-shadow:0 5px 0 rgba(0,0,0,0.1);/* 属性向框添加一个或多个阴影*/
 }
 
 nav ul {
