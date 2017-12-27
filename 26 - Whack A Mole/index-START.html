@@ -38,6 +38,7 @@
     const moles = document.querySelectorAll('.mole');
     //console.log(holes);
     let scores = 0;
+    let point = 0;//记录点击次数
 
     //设置随机数
     function random(max, min) {
@@ -49,8 +50,16 @@
         scoreBoard.textContent = 0;//textContent 属性设置或返回指定节点的文本内容，以及它的所有后代
         scores = 0;
         //出现
-        getRandomMole();
+        holes.forEach(hole=>{
+            hole.classList.remove("up");
+        });
+        console.log(point);
+        if(point===0) {
+            getRandomMole();
+        }
+        point++;
     }
+    //记录上一个洞防止点多次开始
 
     //随机出老鼠
     function getRandomMole() {
